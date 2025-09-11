@@ -51,30 +51,65 @@ Docker installed
 
 Download the Docker image
 
-docker pull ghcr.io/hendram/puppeteerworker1
+**docker pull ghcr.io/hendram/puppeteerworker1**
 
 
 Start the container
 
-docker run -it -d --network=host ghcr.io/hendram/puppeteerworker1 bash
+**docker run -it -d --network=host ghcr.io/hendram/puppeteerworker1 bash**
 
 
 Find your container name
 
-docker ps
+**docker ps**
 
-Example: pedantic_payne (your name will differ)
 
+Example: pedantic_payne (your name will differ).
 
 Enter the container
 
-docker exec -it pedantic_payne /bin/bash
+**docker exec -it pedantic_payne /bin/bash**
 
 
 Run the service
 
-cd /home/browserconnworker1
-node index.js
+**cd /home/browserconnworker1**
+**node index.js**
 
 
+Code Overview
 
+index.js
+Starts the worker, consumes jobs from Kafka, runs the scraper, and sends results back.
+
+kafka.js
+Handles Kafka connection, producer, and consumer setup.
+
+puppeteerWorker.js
+Contains the runScraper function:
+
+Launches Puppeteer
+
+Visits URLs
+
+Extracts and filters page content
+
+Returns results with metadata
+
+
+Features & Functionality:
+- Consumes jobs (URLs + keywords) from Kafka.
+- Uses Puppeteer to scrape web pages in headless mode.
+- Extracts page text and checks if it contains keywords.
+- Produces structured results with metadata (URL, date, source, searched keyword).
+- Sends results back to Kafka for merging with results from the other workers.
+- Designed for distributed, scalable, and fast scraping.
+
+Data Flow:
+chunkgeneratorforaimodel → Kafka ("topuppeteerworker")  
+   ↓  
+Puppeteer Worker 1 (this container)  
+   ↓  
+Kafka ("frompuppeteerworker")  
+   ↓  
+Backend merges results from Worker 1, Worker 2, and Worker 3
