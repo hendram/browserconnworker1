@@ -76,40 +76,37 @@ Run the service
 **cd /home/browserconnworker1**
 **node index.js**
 
+## 🔧 Code Overview
 
-Code Overview
+- **`index.js`**  
+  🚀 Starts the worker, consumes jobs from Kafka, runs the scraper, and sends results back.
 
-index.js
-Starts the worker, consumes jobs from Kafka, runs the scraper, and sends results back.
+- **`kafka.js`**  
+  🔌 Handles Kafka connection, producer, and consumer setup.
 
-kafka.js
-Handles Kafka connection, producer, and consumer setup.
+- **`puppeteerWorker.js`**  
+  🕷️ Contains the `runScraper` function, which:
+  - 🖥️ Launches Puppeteer (headless browser)
+  - 🌐 Visits URLs
+  - 🔍 Extracts and filters page content
+  - 📦 Returns results with metadata
 
-puppeteerWorker.js
-Contains the runScraper function:
+---
 
-Launches Puppeteer
+## ✨ Features & Functionality
 
-Visits URLs
+✔️ Consumes jobs (**URLs + keywords**) from Kafka  
+✔️ Uses **Puppeteer** to scrape web pages in headless mode  
+✔️ Extracts page text and checks if it contains keywords  
+✔️ Produces structured results with metadata (URL, date, source, searched keyword)  
+✔️ Sends results back to Kafka for merging with outputs from other workers  
+✔️ Designed for **distributed, scalable, and fast scraping**
 
-Extracts and filters page content
+---
 
-Returns results with metadata
+## 📡 Data Flow
 
-
-Features & Functionality:
-- Consumes jobs (URLs + keywords) from Kafka.
-- Uses Puppeteer to scrape web pages in headless mode.
-- Extracts page text and checks if it contains keywords.
-- Produces structured results with metadata (URL, date, source, searched keyword).
-- Sends results back to Kafka for merging with results from the other workers.
-- Designed for distributed, scalable, and fast scraping.
-
-Data Flow:
-chunkgeneratorforaimodel → Kafka ("topuppeteerworker")  
-   ↓  
-Puppeteer Worker 1 (this container)  
-   ↓  
-Kafka ("frompuppeteerworker")  
-   ↓  
-Backend merges results from Worker 1, Worker 2, and Worker 3
+    A[chunkgeneratorforaimodel] -->|Jobs| B[Kafka: "topuppeteerworker"]
+    B --> C[Puppeteer Worker 1 🕷️]
+    C -->|Results| D[Kafka: "frompuppeteerworker"]
+    D --> E[Backend merges with Worker 2 & 3]
