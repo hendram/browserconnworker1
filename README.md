@@ -39,6 +39,8 @@ The workers run in parallel to share the scraping load, increasing the speed and
      }
    }
 
+---
+
 💻 Platform Requirements
 
 At least 12 GB RAM
@@ -48,6 +50,8 @@ At least 4 CPU cores (Intel i5 or higher recommended)
 Docker installed
 
 🚀 How to Run
+
+---
 
 Download the Docker image
 
@@ -75,6 +79,8 @@ Run the service
 
 **cd /home/browserconnworker1**
 **node index.js**
+
+---
 
 ## 🔧 Code Overview
 
