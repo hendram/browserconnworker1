@@ -41,44 +41,51 @@ The workers run in parallel to share the scraping load, increasing the speed and
 
 ---
 
-💻 Platform Requirements
+##  ⚡ Platform Requirements
 
-At least 12 GB RAM
-
-At least 4 CPU cores (Intel i5 or higher recommended)
-
-Docker installed
-
-🚀 How to Run
+- 💾 At least **12 GB RAM**  
+- 🖥️ At least **4 CPU cores** (Intel i5 or higher recommended)  
+- 🐳 **Docker** installed  
 
 ---
 
-Download the Docker image
+## 🚀 How to Run It
 
-**docker pull ghcr.io/hendram/puppeteerworker1**
+### 📥 Download
 
+```bash
+docker pull ghcr.io/hendram/puppeteerworker1
+```
 
-Start the container
+### ▶️ Start
 
-**docker run -it -d --network=host ghcr.io/hendram/puppeteerworker1 bash**
+```bash
+docker run -it -d --network=host ghcr.io/hendram/puppeteerworker1 bash
+```
 
+### 🔍 Check Running Container
 
-Find your container name
+```bash
+docker ps
+```
 
-**docker ps**
+```bash
+CONTAINER ID   IMAGE                                 NAME              STATUS
+123abc456def   ghcr.io/hendram/puppeteerworker1      pedantic_payne    Up 5 minutes
+```
 
+### 📦 Enter Container
 
-Example: pedantic_payne (your name will differ).
+```bash
+docker exec -it pedantic_payne /bin/bash
+```
 
-Enter the container
+### 🏃 Run the Service
 
-**docker exec -it pedantic_payne /bin/bash**
-
-
-Run the service
-
-**cd /home/browserconnworker1**
-**node index.js**
+```bash
+cd /home/browserconnworker1
+node index.js
+```
 
 ---
 

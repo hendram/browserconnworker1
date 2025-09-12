@@ -6,7 +6,7 @@ async function startWorker() {
 
   await consumer.subscribe({ topic: "topuppeteerworker", fromBeginning: false });
 
-  console.log(" ^=^z^` Puppeteer worker is listening for jobs on 'fromscrap'...");
+  console.log(" ^=^z^` Puppeteer worker is listening for jobs on 'topuppeteerworker'...");
 
   await consumer.run({
     autoCommit: false, // manual commit
