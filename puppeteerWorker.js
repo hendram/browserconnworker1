@@ -4,7 +4,6 @@ import * as puppeteer from "puppeteer";
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function runScraper(query) {
-console.log(query); 
 const results = [];
     // --- SCRAPE SEARCH RESULTS LINKS ---
 
@@ -43,7 +42,6 @@ const results = [];
           );
           if (found) {
             results.push({ text, metadata: { url: link, date: new Date().toISOString(), sourcekb: "external", searched: query.searched } });
-            console.log(" ^|^e Found query in link:", link);
           }
         }
       } catch (err) {
